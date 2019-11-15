@@ -7,6 +7,9 @@
     "start": "node server.js",
     "dev": "nodemon server"
   },
+  "engines": {
+    "node":"v8.10.0"
+  },
   "author": "Oleh Monastyrskyi",
   "license": "MIT",
   "dependencies": {
