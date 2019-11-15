@@ -77,11 +77,11 @@ app.use('/api/v1/reviews', reviews);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, console.log(`Server running in '${process.env.NODE_ENV}' mode. On port: ${PORT}`.blue.bold));
+app.listen(PORT, console.log(`Server running in '${process.env.NODE_ENV}' mode. On port: ${PORT}`.blue.bold));
 console.log('RUN?')
 // Handle unhandled promise rejections
-process.on('unhandledRejection', (err, promise) => {
-    console.log(`Error: ${err.message}`.red);
-    // close Server & exit process
-    server.close(() => process.exit(1));
-});
+// process.on('unhandledRejection', (err, promise) => {
+//     console.log(`Error: ${err.message}`.red);
+//     // close Server & exit process
+//     server.close(() => process.exit(1));
+// });
