@@ -4,6 +4,8 @@ const asyncHandler = require('../middleware/async');
 const sendEmail = require('../util/sendEmail');
 const User = require('../models/User');
 
+const bcrypt = require('bcryptjs');
+
 // @desc    Register user
 // @route   POST /api/v1/auth/register
 // @access  public
@@ -38,11 +40,18 @@ exports.login = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse('Invalid credentials', 401))
     }
 
-    // Check if password matches
-    const isMatch = user.matchPassword(password);
-    if (!isMatch) {
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
         return next(new ErrorResponse('Invalid credentials', 401))
     }
+
+
+    // console.log('user',user);
+    // Check if password matches
+    // const isMatch = user.matchPassword(password);
+    // if (!isMatch) {
+    //     return next(new ErrorResponse('Invalid credentials', 401))
+    // }
 
     sendTokenResponse(user, 200, res);
 });
