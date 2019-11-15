@@ -62,7 +62,13 @@ app.use(limiter);
 app.use(hpp());
 
 // Enable CORS
-app.use(cors());
+// app.use(cors());
+
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true
+};
+app.use(cors(corsOptions));
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -76,9 +82,16 @@ app.use('/api/v1/reviews', reviews);
 
 app.use(errorHandler);
 
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'));
+    app.get('*', (reg, res)=>{
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    })
+}
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log(`Server running in '${process.env.NODE_ENV}' mode. On port: ${PORT}`.blue.bold));
-console.log('RUN?')
+console.log('RUN?-')
 // Handle unhandled promise rejections
 // process.on('unhandledRejection', (err, promise) => {
 //     console.log(`Error: ${err.message}`.red);
