@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 const geocoder = require('../util/geocoder');
 
-const BootcampScheme = new mongoose.Schema({
+const BootcampScheme = new mongoose.Schema(
+    {
         name: {
             type: String,
             required: [true, 'Please add a name'],
@@ -111,13 +112,13 @@ const BootcampScheme = new mongoose.Schema({
 );
 
 // Create bootcamp slug from the name
-BootcampScheme.pre('save', function(next) {
-    this.slug = slugify(this.name, { lower: true });
+BootcampScheme.pre('save', function (next) {
+    this.slug = slugify(this.name, {lower: true});
     next();
 });
 
 // Geocode & create location field
-BootcampScheme.pre('save', async function(next) {
+BootcampScheme.pre('save', async function (next) {
     const loc = await geocoder.geocode(this.address);
     this.location = {
         type: 'Point',
@@ -136,9 +137,9 @@ BootcampScheme.pre('save', async function(next) {
 });
 
 // Cascade delete courses when a bootcamp is deleted
-BootcampScheme.pre('remove', async function(next) {
+BootcampScheme.pre('remove', async function (next) {
     console.log(`Courses being removed from bootcamp ${this._id}`);
-    await this.model('Course').deleteMany({ bootcamp: this._id });
+    await this.model('Course').deleteMany({bootcamp: this._id});
     next();
 });
 
