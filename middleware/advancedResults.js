@@ -11,7 +11,17 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     let queryStr = JSON.stringify(reqQuery);
 
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, math => `$${math}`);
-    query = model.find(JSON.parse(queryStr));
+
+    if (req.query.name) {
+        let regexp = new RegExp("^" + req.query.name);
+
+        let filteredObj = JSON.parse(queryStr);
+        filteredObj.name = regexp;
+
+        query = model.find(filteredObj);
+    }else{
+        query = model.find(JSON.parse(queryStr));
+    }
 
     // Select Fields
     if (req.query.select) {
