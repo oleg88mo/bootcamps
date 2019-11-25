@@ -13,6 +13,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, math => `$${math}`);
 
     if (req.query.name) {
+        // search by Name (startWith)
         let regexp = new RegExp("^" + req.query.name);
 
         let filteredObj = JSON.parse(queryStr);
