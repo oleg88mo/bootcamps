@@ -18,6 +18,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
 
         let filteredObj = JSON.parse(queryStr);
         filteredObj.name = regexp;
+
         query = model.find(filteredObj);
     }else{
         query = model.find(JSON.parse(queryStr));
