@@ -14,11 +14,10 @@ const advancedResults = (model, populate) => async (req, res, next) => {
 
     if (req.query.name) {
         // search by Name (startWith)
-        let regexp = new RegExp("^" + req.query.name);
+        let regexp = new RegExp("^" + req.query.name.toLowerCase(), 'i');
 
         let filteredObj = JSON.parse(queryStr);
         filteredObj.name = regexp;
-
         query = model.find(filteredObj);
     }else{
         query = model.find(JSON.parse(queryStr));
