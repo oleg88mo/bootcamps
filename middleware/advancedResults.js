@@ -2,7 +2,23 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     let query;
     let valid = true;
     let reqQuery = {...req.query};
-    const queryPermission = ['select', 'sort', 'page', 'user', 'phone', 'website', 'name', 'limit', 'averageCost', 'averageRating', 'careers', 'housing', 'jobAssistance', 'jobGuarantee', 'acceptGi'];
+    const queryPermission = [
+        'select',
+        'sort',
+        'page',
+        'user',
+        'phone',
+        'website',
+        'name',
+        'limit',
+        'averageCost',
+        'averageRating',
+        'careers',
+        'housing',
+        'jobAssistance',
+        'jobGuarantee',
+        'acceptGi'
+    ];
 
     Object.keys(reqQuery).map(el => {
         if (!queryPermission.includes(el)) {
