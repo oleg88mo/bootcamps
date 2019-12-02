@@ -10,7 +10,6 @@ const advancedResults = (model, populate) => async (req, res, next) => {
         }
     });
 
-
     if (valid) {
         // Fields to exclude
         const removeFields = ['select', 'sort', 'page', 'limit'];
